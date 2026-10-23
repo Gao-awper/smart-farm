@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.OrderGoodsMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, order_id, goods_id, name, image, price, count, spec
+    </sql>
+
+    <!-- 批量插入订单商品 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO order_goods (
+        order_id, goods_id, name, image, price, count, spec
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId}, #{item.goodsId}, #{item.name}, #{item.image}, #{item.price}, #{item.count}, #{item.spec})
+        </foreach>
+    </insert>
+
+    <!-- 根据订单ID查询订单商品 -->
+    <select id="selectByOrderId" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.OrderGoods">
+        SELECT
+            id AS id,
+            order_id AS orderId,
+            goods_id AS goodsId,
+            name ,
+            image ,
+            price ,
+            count ,
+            spec
+        FROM
+            order_goods
+        WHERE
+            order_id = #{orderId}
+    </select>
+
+    <!-- 根据订单ID删除订单商品 -->
+    <delete id="deleteByOrderId" parameterType="java.lang.Long">
+        DELETE FROM order_goods
+        WHERE
+            order_id = #{orderId}
+    </delete>
+</mapper>

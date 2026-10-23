@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.NoticeMapper">
+    <!-- 公告基础列 -->
+    <sql id="NoticeBaseColumns">
+        id, title, content, type, time, author, created_at, updated_at
+    </sql>
+
+    <!-- 查询所有公告 -->
+    <select id="selectAll" resultType="org.example.springstudy.Bean.Notice">
+        SELECT 
+            <include refid="NoticeBaseColumns"/>
+        FROM notices
+        ORDER BY time DESC
+    </select>
+
+    <!-- 根据ID查询公告 -->
+    <select id="selectById" parameterType="Long" resultType="org.example.springstudy.Bean.Notice">
+        SELECT 
+            <include refid="NoticeBaseColumns"/>
+        FROM notices
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据类型查询公告 -->
+    <select id="selectByType" parameterType="String" resultType="org.example.springstudy.Bean.Notice">
+        SELECT 
+            <include refid="NoticeBaseColumns"/>
+        FROM notices
+        WHERE type = #{type}
+        ORDER BY time DESC
+    </select>
+
+    <!-- 新增公告 -->
+    <insert id="insertNotice" parameterType="org.example.springstudy.Bean.Notice" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO notices (
+            title, content, type, time, author
+        ) VALUES (
+            #{title}, #{content}, #{type}, #{time}, #{author}
+        )
+    </insert>
+
+    <!-- 更新公告 -->
+    <update id="updateNotice" parameterType="org.example.springstudy.Bean.Notice">
+        UPDATE notices
+        SET 
+            title = #{title}, 
+            content = #{content}, 
+            type = #{type}, 
+            time = #{time}, 
+            author = #{author}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除公告 -->
+    <delete id="deleteNotice" parameterType="Long">
+        DELETE FROM notices
+        WHERE id = #{id}
+    </delete>
+</mapper>

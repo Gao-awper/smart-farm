@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.GoodsSubmissionMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, name, tag, image, price, stock, category, user_id as userId, 
+        status, review_comment as reviewComment, created_at as createdAt, 
+        updated_at as updatedAt, reviewed_at as reviewedAt, reviewed_by as reviewedBy
+    </sql>
+
+    <!-- 插入商品投稿 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.GoodsSubmission" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO goods_submissions (
+            name, tag, image, price, stock, category, user_id, status, 
+            created_at, updated_at
+        ) VALUES (
+            #{name}, #{tag}, #{image}, #{price}, #{stock}, #{category}, #{userId}, #{status}, 
+            NOW(), NOW()
+        )
+    </insert>
+
+    <!-- 查询所有商品投稿 -->
+    <select id="selectAll" resultType="org.example.springstudy.Bean.GoodsSubmission">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods_submissions
+        ORDER BY
+            id DESC
+    </select>
+
+    <!-- 根据用户ID查询商品投稿 -->
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.GoodsSubmission">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods_submissions
+        WHERE
+            user_id = #{userId}
+        ORDER BY
+            id DESC
+    </select>
+
+    <!-- 根据ID查询商品投稿 -->
+    <select id="selectById" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.GoodsSubmission">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods_submissions
+        WHERE
+            id = #{id}
+    </select>
+
+    <!-- 根据状态查询商品投稿 -->
+    <select id="selectByStatus" parameterType="java.lang.String" resultType="org.example.springstudy.Bean.GoodsSubmission">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods_submissions
+        WHERE
+            status = #{status}
+        ORDER BY
+            id DESC
+    </select>
+
+    <!-- 更新商品投稿的审核状态 -->
+    <update id="updateStatus" parameterType="org.example.springstudy.Bean.GoodsSubmission">
+        UPDATE goods_submissions
+        <set>
+            status = #{status},
+            review_comment = #{reviewComment},
+            reviewed_at = NOW(),
+            reviewed_by = #{reviewedBy},
+            updated_at = NOW()
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 删除商品投稿 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM goods_submissions
+        WHERE
+            id = #{id}
+    </delete>
+</mapper>

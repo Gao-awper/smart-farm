@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.QuestionMapper">
+    
+    <!-- 根据ID查询题目 -->
+    <select id="selectById" parameterType="Long" resultType="org.example.springstudy.Bean.Question">
+        SELECT * FROM questions WHERE id = #{id}
+    </select>
+    
+    <!-- 根据分类查询题目列表 -->
+    <select id="selectByCategory" parameterType="String" resultType="org.example.springstudy.Bean.Question">
+        SELECT * FROM questions
+        <where>
+            <if test="category != null and category.trim() != '' and category.toLowerCase() != 'all'">
+                category = #{category}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据分类和难度查询题目列表 -->
+    <select id="selectByCategoryAndDifficulty" resultType="org.example.springstudy.Bean.Question">
+        SELECT * FROM questions WHERE category = #{category} AND difficulty = #{difficulty}
+    </select>
+    
+    <!-- 随机获取指定数量的题目 -->
+    <select id="selectRandomQuestions" resultType="org.example.springstudy.Bean.Question">
+        SELECT * FROM questions 
+        WHERE category = #{category} 
+        ORDER BY RAND() 
+        LIMIT #{count}
+    </select>
+    
+    <!-- 插入题目 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.Question" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO questions(type, content, category, difficulty, score, option_a, option_b, option_c, option_d, correct_answer, `explain`, created_at, updated_at)
+        VALUES(#{type}, #{content}, #{category}, #{difficulty}, #{score}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{correctAnswer}, #{explain}, NOW(), NOW())
+    </insert>
+    
+    <!-- 更新题目 -->
+    <update id="update" parameterType="org.example.springstudy.Bean.Question">
+        UPDATE questions 
+        SET type = #{type}, content = #{content}, category = #{category}, 
+            difficulty = #{difficulty}, score = #{score}, 
+            option_a = #{optionA}, option_b = #{optionB}, option_c = #{optionC}, option_d = #{optionD}, 
+            correct_answer = #{correctAnswer}, `explain` = #{explain}, updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 删除题目 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM questions WHERE id = #{id}
+    </delete>
+    
+    <!-- 批量插入题目 -->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO questions(type, content, category, difficulty, score, option_a, option_b, option_c, option_d, correct_answer, `explain`, created_at, updated_at)
+        VALUES
+        <foreach collection="questions" item="question" separator=",">
+            (#{question.type}, #{question.content}, #{question.category}, #{question.difficulty}, #{question.score}, 
+             #{question.optionA}, #{question.optionB}, #{question.optionC}, #{question.optionD}, 
+             #{question.correctAnswer}, #{question.explain}, NOW(), NOW())
+        </foreach>
+    </insert>
+    
+</mapper>

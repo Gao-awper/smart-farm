@@ -1,0 +1,37 @@
+[
+  {
+    "date": "2026-03-10",
+    "temperature": 25,
+    "humidity": 60,
+    "windSpeed": 12,
+    "rainfall": 0
+  },
+  {
+    "date": "2026-03-09",
+    "temperature": 24,
+    "humidity": 62,
+    "windSpeed": 10,
+    "rainfall": 0
+  },
+  {
+    "date": "2026-03-08",
+    "temperature": 26,
+    "humidity": 58,
+    "windSpeed": 15,
+    "rainfall": 0
+  },
+  {
+    "date": "2026-03-07",
+    "temperature": 23,
+    "humidity": 65,
+    "windSpeed": 8,
+    "rainfall": 5
+  },
+  {
+    "date": "2026-03-06",
+    "temperature": 22,
+    "humidity": 68,
+    "windSpeed": 5,
+    "rainfall": 10
+  }
+]

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.AnswerRecordMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, user_id, type, answer_time, score, total_score, duration, correct_count, error_count
+    </sql>
+
+    <!-- 根据用户ID查询答题记录列表 -->
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.AnswerRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        answer_records
+        WHERE
+        user_id = #{userId}
+        ORDER BY
+        answer_time DESC
+    </select>
+
+    <!-- 根据ID查询答题记录 -->
+    <select id="selectById" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.AnswerRecord">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        answer_records
+        WHERE
+        id = #{id}
+    </select>
+
+    <!-- 插入答题记录 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.AnswerRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO answer_records (
+            user_id, type, answer_time, score, total_score, duration, correct_count, error_count
+        ) VALUES (
+                     #{userId}, #{type}, #{answerTime}, #{score}, #{totalScore}, #{duration}, #{correctCount}, #{errorCount}
+                 )
+    </insert>
+
+    <!-- 更新答题记录 -->
+    <update id="updateById" parameterType="org.example.springstudy.Bean.AnswerRecord">
+        UPDATE answer_records
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="answerTime != null">answer_time = #{answerTime},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="duration != null">duration = #{duration},</if>
+            <if test="correctCount != null">correct_count = #{correctCount},</if>
+            <if test="errorCount != null">error_count = #{errorCount},</if>
+            <if test="score != null">score = #{score},</if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 删除答题记录 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM answer_records
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!-- 统计每日答题次数 -->
+    <select id="countDailyAnswers" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM answer_records
+        WHERE user_id = #{userId}
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+        AND answer_time BETWEEN #{startTime} AND #{endTime}
+    </select>
+
+    <!-- 获取用户答题统计信息 -->
+    <select id="selectStatisticsByUserId" parameterType="java.lang.Long" resultType="java.util.HashMap">
+        SELECT
+        COUNT(DISTINCT ar.id) as totalRecords, <!-- 修正：按答题记录ID去重，统计总次数 -->
+        SUM(ar.score) as totalScore,
+        SUM(ad.correct) as correctCount, <!-- 修正：直接求和，简化逻辑 -->
+        SUM(CASE WHEN ad.correct = 0 THEN 1 ELSE 0 END) as errorCount
+        FROM answer_records ar
+        JOIN answer_details ad ON ar.id = ad.record_id
+        WHERE ar.user_id = #{userId}
+    </select>
+
+    <!-- 获取答题排行榜（仅保留1份，补充answerType筛选+完整分组字段） -->
+    <select id="selectRanking" resultType="java.util.HashMap">
+        SELECT
+        u.id as userId,
+        u.nickname as name,
+        u.avatar,
+        SUM(ar.score) as totalScore
+        FROM answer_records ar
+        JOIN user u ON ar.user_id = u.id
+        WHERE ar.answer_time BETWEEN #{startTime} AND #{endTime}
+        <!-- 新增：answerType 不为空时才筛选专题 -->
+        <if test="answerType != null and answerType != ''">
+            AND ar.type = #{answerType}
+        </if>
+        GROUP BY u.id, u.nickname, u.avatar
+        ORDER BY totalScore DESC
+        LIMIT #{limit}
+    </select>
+
+
+    <select id="selectUserRanking" resultType="java.util.HashMap">
+        SELECT
+        t2.AnswerRecordrank,
+        t2.userId,
+        t2.name,
+        t2.avatar,
+        t2.totalScore
+        FROM (
+        SELECT
+        CASE
+        WHEN @prev_score = t1.totalScore THEN @rank
+        ELSE @rank := @rank + 1
+        END as AnswerRecordrank,
+        @prev_score := t1.totalScore as totalScore,
+        t1.userId,
+        t1.name,
+        t1.avatar
+        FROM (
+        SELECT
+        u.id as userId,
+        u.nickname as name,
+        u.avatar,
+        IFNULL(SUM(ar.score), 0) as totalScore
+        FROM answer_records ar
+        JOIN user u ON ar.user_id = u.id
+        WHERE ar.answer_time BETWEEN #{startTime} AND #{endTime}
+        <if test="answerType != null and answerType != ''">
+            AND ar.type = #{answerType}
+        </if>
+        GROUP BY u.id, u.nickname, u.avatar
+        ORDER BY totalScore DESC
+        ) t1
+        CROSS JOIN (SELECT @rank := 0, @prev_score := NULL) r
+        ) t2
+        WHERE t2.userId = #{userId}
+        LIMIT 1
+    </select>
+</mapper>

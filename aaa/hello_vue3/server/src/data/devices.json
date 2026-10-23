@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "土壤传感器1",
+    "type": "土壤传感器",
+    "status": "在线",
+    "location": "东区",
+    "lastOnline": "2026-05-11 01:28:00"
+  },
+  {
+    "id": 2,
+    "name": "气象站1",
+    "type": "气象站",
+    "status": "在线",
+    "location": "西区",
+    "lastOnline": "2026-03-09 10:05"
+  },
+  {
+    "id": 3,
+    "name": "灌溉控制器1",
+    "type": "灌溉控制器",
+    "status": "在线",
+    "location": "南区",
+    "lastOnline": "2026-03-10 12:37:49"
+  },
+  {
+    "id": 4,
+    "name": "摄像头1",
+    "type": "监控摄像头",
+    "status": "在线",
+    "location": "北区",
+    "lastOnline": "2026-03-09 10:10"
+  }
+]

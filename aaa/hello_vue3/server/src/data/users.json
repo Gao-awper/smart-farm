@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nickname": "admin",
+    "email": "admin@smartfarm.com",
+    "phone": "13800138001",
+    "sex": "男",
+    "identity": "admin",
+    "password": "$2b$10$FrhqKQufgYdTAUZw6ODZH.ehyOcqxWdMASgw93peUbg7NAljfwUr2"
+  },
+  {
+    "id": 2,
+    "nickname": "farmer",
+    "email": "farmer@smartfarm.com",
+    "phone": "13800138002",
+    "sex": "男",
+    "identity": "regular",
+    "password": "$2b$10$FrhqKQufgYdTAUZw6ODZH.ehyOcqxWdMASgw93peUbg7NAljfwUr2"
+  },
+  {
+    "id": 3,
+    "nickname": "technician",
+    "email": "technician@smartfarm.com",
+    "phone": "13800138003",
+    "sex": "女",
+    "identity": "regular",
+    "password": "$2b$10$FrhqKQufgYdTAUZw6ODZH.ehyOcqxWdMASgw93peUbg7NAljfwUr2"
+  },
+  {
+    "id": 4,
+    "nickname": "志远",
+    "email": "123@qq.com",
+    "phone": "15687941516",
+    "password": "$2b$10$FrhqKQufgYdTAUZw6ODZH.ehyOcqxWdMASgw93peUbg7NAljfwUr2",
+    "sex": "男",
+    "identity": "regular"
+  },
+  {
+    "id": 5,
+    "nickname": "高",
+    "password": "$2b$10$FrhqKQufgYdTAUZw6ODZH.ehyOcqxWdMASgw93peUbg7NAljfwUr2",
+    "identity": "farmer"
+  }
+]

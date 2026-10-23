@@ -1,0 +1,122 @@
+<view class="container">
+  <view class="connection-status">
+    <view class="status-indicator {{ isConnected ? 'connected' : '' }}"></view>
+    <text>{{ isConnected ? '实时连接中' : '连接断开' }}</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">土壤监测</view>
+    <view class="sensor-data">
+      <view class="data-item">
+        <text class="data-label">土壤湿度</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.soilMoistureDisplay }}</text>
+          <text class="data-unit">%</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">土壤温度</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.soilTemperatureDisplay }}</text>
+          <text class="data-unit">°C</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">土壤pH值</text>
+        <text class="data-value">{{ sensorData.soilPh }}</text>
+      </view>
+      <view class="data-item">
+        <text class="data-label">土壤养分</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.soilNutrient }}</text>
+          <text class="data-unit">mg/kg</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">气象监测</view>
+    <view class="sensor-data">
+      <view class="data-item">
+        <text class="data-label">空气温度</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.airTemperatureDisplay }}</text>
+          <text class="data-unit">°C</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">空气湿度</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.airHumidityDisplay }}</text>
+          <text class="data-unit">%</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">光照强度</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.lightDisplay }}</text>
+          <text class="data-unit">klux</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">风速</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.windSpeedDisplay }}</text>
+          <text class="data-unit">m/s</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">水质监测</view>
+    <view class="sensor-data">
+      <view class="data-item">
+        <text class="data-label">水温</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.waterTemperatureDisplay }}</text>
+          <text class="data-unit">°C</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">溶解氧</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.dissolvedOxygenDisplay }}</text>
+          <text class="data-unit">mg/L</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <text class="data-label">pH值</text>
+        <text class="data-value">{{ sensorData.waterPh }}</text>
+      </view>
+      <view class="data-item">
+        <text class="data-label">电导率</text>
+        <view class="data-value-row">
+          <text class="data-value">{{ sensorData.conductivity }}</text>
+          <text class="data-unit">μS/cm</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">数据趋势</view>
+    <view class="chart-placeholder">
+      <view class="chart-bars">
+        <view class="chart-bar" style="height: {{ soilMoistureHeight }}%; background: #2d5016;"></view>
+        <view class="chart-bar" style="height: {{ soilTempHeight }}%; background: #dc3545;"></view>
+        <view class="chart-bar" style="height: {{ airTempHeight }}%; background: #007bff;"></view>
+        <view class="chart-bar" style="height: {{ humidityHeight }}%; background: #ffc107;"></view>
+        <view class="chart-bar" style="height: {{ lightHeight }}%; background: #17a2b8;"></view>
+      </view>
+      <view class="chart-labels">
+        <text>湿度</text>
+        <text>土温</text>
+        <text>气温</text>
+        <text>湿度</text>
+        <text>光照</text>
+      </view>
+    </view>
+  </view>
+</view>

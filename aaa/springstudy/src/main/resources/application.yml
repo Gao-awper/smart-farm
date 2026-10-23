@@ -1,0 +1,50 @@
+spring:
+  # 本地私有配置（数据库密码等），该文件已加入 .gitignore，不提交到仓库
+  config:
+    import: optional:file:./application-local.yml
+
+  # 日志配置
+  logging:
+    level:
+      org.example.springstudy: DEBUG
+      org.example.springstudy.controller: DEBUG
+      org.example.springstudy.service: DEBUG
+      org.example.springstudy.Mapper: DEBUG
+      org.apache.ibatis: DEBUG
+      java.sql: DEBUG
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-15X{traceId:-N/A}] %-5level %logger{50}:%L - %msg%n"
+      file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-15X{traceId:-N/A}] %-5level %logger{50}:%L - %msg%n"
+  
+  datasource:
+    # 基本配置
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:farm}?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # 指定使用 C3P0 连接池
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+    c3p0:
+      maxPoolSize: 200
+      minPoolSize: 10
+      initialPoolSize: 10
+      acquireIncrement: 5
+      idleConnectionTestPeriod: 28000
+      maxIdleTime: 28000
+      testConnectionOnCheckout: false
+      preferredTestQuery: SELECT 1
+
+  cache:
+    type: jcache
+  jcache:
+    config: classpath:ehcache.xml
+  mybatis-plus:
+    configuration:
+      map-underscore-to-camel-case: true
+    mapper-locations: classpath*:mapper/*.xml
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+

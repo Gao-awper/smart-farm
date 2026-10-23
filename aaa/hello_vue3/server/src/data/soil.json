@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-03-10",
+    "moisture": 65,
+    "temperature": 22,
+    "ph": 6.8
+  },
+  {
+    "date": "2026-03-09",
+    "moisture": 63,
+    "temperature": 21,
+    "ph": 6.7
+  },
+  {
+    "date": "2026-03-08",
+    "moisture": 67,
+    "temperature": 23,
+    "ph": 6.9
+  },
+  {
+    "date": "2026-03-07",
+    "moisture": 64,
+    "temperature": 22,
+    "ph": 6.8
+  },
+  {
+    "date": "2026-03-06",
+    "moisture": 66,
+    "temperature": 24,
+    "ph": 6.7
+  }
+]

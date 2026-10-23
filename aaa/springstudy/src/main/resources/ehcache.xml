@@ -1,0 +1,12 @@
+<ehcache name="myCacheManager">
+    <!-- 磁盘缓存路径 -->
+    <diskStore path="java.io.tmpdir/ehcache"/>
+    <!-- 默认缓存策略 -->
+    <defaultCache
+            maxEntriesLocalHeap="10"
+            eternal="false"
+            timeToIdleSeconds="600"
+            timeToLiveSeconds="1200"
+            overflowToDisk="true"
+            diskPersistent="false"/>
+</ehcache>

@@ -1,0 +1,183 @@
+.container {
+  padding: 20rpx;
+  padding-bottom: 120rpx;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 40rpx;
+  padding: 16rpx 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.search-icon {
+  font-size: 32rpx;
+}
+
+.filter-bar {
+  display: flex;
+  background: white;
+  border-radius: 12rpx;
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.filter-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.filter-item.active {
+  background: #2d5016;
+  color: white;
+}
+
+.device-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.device-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 20rpx;
+}
+
+.device-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.device-status {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.device-status.online {
+  background: #28a745;
+}
+
+.device-status.offline {
+  background: #6c757d;
+}
+
+.device-status.warning {
+  background: #ffc107;
+}
+
+.device-info {
+  flex: 1;
+}
+
+.device-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.device-id {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.device-type {
+  background: #f0f7e6;
+  color: #2d5016;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.device-detail {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-right: 24rpx;
+}
+
+.detail-icon {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.detail-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.device-actions {
+  display: flex;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f7e6;
+}
+
+.action-btn {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+}
+
+.action-btn:first-child {
+  margin-right: 16rpx;
+}
+
+.action-btn text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.action-btn.primary {
+  background: #2d5016;
+}
+
+.action-btn.primary text {
+  color: white;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 180rpx;
+  right: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(45, 80, 22, 0.3);
+}
+
+.fab-button text {
+  font-size: 56rpx;
+  color: white;
+  line-height: 1;
+}

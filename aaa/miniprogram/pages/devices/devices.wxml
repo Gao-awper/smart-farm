@@ -1,0 +1,60 @@
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索设备" value="{{ searchText }}" bindinput="onSearchInput" />
+    <text class="search-icon">🔍</text>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{ currentFilter === 'all' ? 'active' : '' }}" bindtap="setFilter" data-filter="all">
+      <text>全部</text>
+    </view>
+    <view class="filter-item {{ currentFilter === 'online' ? 'active' : '' }}" bindtap="setFilter" data-filter="online">
+      <text>在线</text>
+    </view>
+    <view class="filter-item {{ currentFilter === 'offline' ? 'active' : '' }}" bindtap="setFilter" data-filter="offline">
+      <text>离线</text>
+    </view>
+    <view class="filter-item {{ currentFilter === 'warning' ? 'active' : '' }}" bindtap="setFilter" data-filter="warning">
+      <text>告警</text>
+    </view>
+  </view>
+
+  <view class="device-list">
+    <view class="device-card" wx:for="{{ filteredDevices }}" wx:for-item="device" wx:key="id">
+      <view class="device-header">
+        <view class="device-status {{ device.status }}"></view>
+        <view class="device-info">
+          <text class="device-name">{{ device.name }}</text>
+          <text class="device-id">设备ID: {{ device.id }}</text>
+        </view>
+        <text class="device-type">{{ device.type }}</text>
+      </view>
+      <view class="device-detail">
+        <view class="detail-item">
+          <text class="detail-icon">📍</text>
+          <text class="detail-text">{{ device.location }}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-icon">📅</text>
+          <text class="detail-text">{{ device.lastUpdate }}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-icon">🔋</text>
+          <text class="detail-text">{{ device.battery }}%</text>
+        </view>
+      </view>
+      <view class="device-actions">
+        <view class="action-btn" bindtap="viewDevice" data-id="{{ device.id }}">
+          <text>查看详情</text>
+        </view>
+        <view class="action-btn primary" bindtap="controlDevice" data-id="{{ device.id }}">
+          <text>{{ device.status === 'online' ? '控制' : '唤醒' }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fab-button" bindtap="addDevice">
+    <text>+</text>
+  </view>
+</view>

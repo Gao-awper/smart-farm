@@ -1,0 +1,48 @@
+{
+  "overview": {
+    "totalArea": 100,
+    "totalCrops": 4,
+    "totalDevices": 4,
+    "irrigationStatus": "正常",
+    "weatherStatus": "良好",
+    "soilStatus": "健康",
+    "recentActivities": [
+      {
+        "id": 1,
+        "type": "灌溉",
+        "time": "2026-03-10 08:00",
+        "area": "东区"
+      },
+      {
+        "id": 2,
+        "type": "施肥",
+        "time": "2026-03-09 14:30",
+        "area": "西区"
+      },
+      {
+        "id": 3,
+        "type": "监测",
+        "time": "2026-03-09 10:15",
+        "area": "南区"
+      }
+    ]
+  },
+  "realtime": {
+    "soil": {
+      "moisture": 65,
+      "temperature": 22,
+      "ph": 6.8
+    },
+    "weather": {
+      "temperature": 25,
+      "humidity": 60,
+      "windSpeed": 12,
+      "rainfall": 0
+    },
+    "irrigation": {
+      "status": "正常",
+      "waterLevel": 85,
+      "flowRate": 15
+    }
+  }
+}

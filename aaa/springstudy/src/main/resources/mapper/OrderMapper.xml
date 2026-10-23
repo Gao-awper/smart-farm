@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.OrderMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, user_id, order_no, create_time, status, total_price, shipping_fee, payment_method, address_id
+    </sql>
+
+    <!-- 根据用户ID查询订单列表 -->
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.Order">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            orders
+        WHERE
+            user_id = #{userId}
+        ORDER BY
+            create_time DESC
+    </select>
+
+    <!-- 根据ID查询订单 -->
+    <select id="selectById" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.Order">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            orders
+        WHERE
+            id = #{id}
+    </select>
+
+    <!-- 插入订单 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.Order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO orders (
+            user_id, order_no, create_time, status, total_price, shipping_fee, payment_method, address_id
+        ) VALUES (
+            #{userId}, #{orderNo}, #{createTime}, #{status}, #{totalPrice}, #{shippingFee}, #{paymentMethod}, #{addressId}
+        )
+    </insert>
+
+    <!-- 更新订单 -->
+    <update id="updateById" parameterType="org.example.springstudy.Bean.Order">
+        UPDATE orders
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="shippingFee != null">shipping_fee = #{shippingFee},</if>
+            <if test="paymentMethod != null">payment_method = #{paymentMethod},</if>
+            <if test="addressId != null">address_id = #{addressId},</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 删除订单 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM orders
+        WHERE
+            id = #{id}
+    </delete>
+
+
+    <!-- 查询所有订单 -->
+    <select id="selectAll" resultType="org.example.springstudy.Bean.Order">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        orders
+        ORDER BY
+        create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.AnswerDetailMapper">
+    
+    <!-- 根据ID查询答题详情 -->
+    <select id="selectById" parameterType="Long" resultType="org.example.springstudy.Bean.AnswerDetail">
+        SELECT * FROM answer_detail WHERE id = #{id}
+    </select>
+    
+    <!-- 根据记录ID查询答题详情列表 -->
+    <select id="selectByRecordId" parameterType="Long" resultType="org.example.springstudy.Bean.AnswerDetail">
+        SELECT * FROM answer_detail WHERE record_id = #{recordId}
+    </select>
+    
+    <!-- 插入答题详情 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.AnswerDetail" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO answer_detail(record_id, question_id, question_content, question_type, user_answer, correct_answer, is_correct, score, create_time)
+        VALUES(#{recordId}, #{questionId}, #{questionContent}, #{questionType}, #{userAnswer}, #{correctAnswer}, #{isCorrect}, #{score}, #{createTime})
+    </insert>
+    
+    <!-- 批量插入答题详情 -->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO answer_detail(record_id, question_id, question_content, question_type, user_answer, correct_answer, is_correct, score, create_time)
+        VALUES
+        <foreach collection="list" item="detail" separator=",">
+            (#{detail.recordId}, #{detail.questionId}, #{detail.questionContent}, #{detail.questionType}, #{detail.userAnswer}, #{detail.correctAnswer}, #{detail.isCorrect}, #{detail.score}, #{detail.createTime})
+        </foreach>
+    </insert>
+    
+    <!-- 根据记录ID删除答题详情 -->
+    <delete id="deleteByRecordId" parameterType="Long">
+        DELETE FROM answer_detail WHERE record_id = #{recordId}
+    </delete>
+    
+</mapper>

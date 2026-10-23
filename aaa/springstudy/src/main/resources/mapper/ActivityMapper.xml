@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.ActivityMapper">
+    <!-- 活动基础列 -->
+    <sql id="ActivityBaseColumns">
+        a.id, a.farm_id, a.title, a.description, a.start_time, a.end_time, 
+        a.location, a.capacity, a.registrations, a.status, a.image, a.detail, 
+        a.created_at, a.updated_at
+    </sql>
+
+    <!-- 查询所有活动 -->
+    <select id="selectAll" resultMap="ActivityResultMap">
+        SELECT 
+            <include refid="ActivityBaseColumns"/>
+        FROM activities a
+        ORDER BY a.created_at DESC
+    </select>
+
+    <!-- 根据ID查询活动 -->
+    <select id="selectById" parameterType="Long" resultMap="ActivityResultMap">
+        SELECT 
+            <include refid="ActivityBaseColumns"/>
+        FROM activities a
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 查询活动的亮点 -->
+    <select id="selectHighlightsByActivityId" parameterType="Long" resultType="org.example.springstudy.Bean.ActivityHighlight">
+        SELECT 
+            id, activity_id, content, created_at
+        FROM activity_highlights
+        WHERE activity_id = #{activityId}
+    </select>
+
+    <!-- 查询活动的标签 -->
+    <select id="selectTagsByActivityId" parameterType="Long" resultType="org.example.springstudy.Bean.ActivityTag">
+        SELECT 
+            at.id, at.name, at.created_at
+        FROM activity_tags at
+        JOIN activity_tag_relations atr ON at.id = atr.tag_id
+        WHERE atr.activity_id = #{activityId}
+    </select>
+
+    <!-- 新增活动 -->
+    <insert id="insertActivity" parameterType="org.example.springstudy.Bean.Activity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO activities (
+            farm_id, title, description, start_time, end_time, 
+            location, capacity, registrations, status, image, detail
+        ) VALUES (
+            #{farmId}, #{title}, #{description}, #{startTime}, #{endTime}, 
+            #{location}, #{capacity}, #{registrations}, #{status}, #{image}, #{detail}
+        )
+    </insert>
+
+    <!-- 更新活动 -->
+    <update id="updateActivity" parameterType="org.example.springstudy.Bean.Activity">
+        UPDATE activities
+        SET 
+            farm_id = #{farmId}, 
+            title = #{title}, 
+            description = #{description}, 
+            start_time = #{startTime}, 
+            end_time = #{endTime}, 
+            location = #{location}, 
+            capacity = #{capacity}, 
+            registrations = #{registrations}, 
+            status = #{status}, 
+            image = #{image}, 
+            detail = #{detail}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除活动 -->
+    <delete id="deleteActivity" parameterType="Long">
+        DELETE FROM activities
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 报名活动 -->
+    <insert id="registerActivity" parameterType="org.example.springstudy.Bean.ActivityRegistration" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO activity_registrations (activity_id, user_id)
+        VALUES (#{activityId}, #{userId})
+    </insert>
+
+    <!-- 更新活动已报名人数 -->
+    <update id="updateActivityRegistrations">
+        UPDATE activities
+        SET registrations = registrations + #{increment}
+        WHERE id = #{activityId}
+    </update>
+
+    <!-- 查询用户是否已报名该活动 -->
+    <select id="selectRegistrationByActivityIdAndUserId" resultType="org.example.springstudy.Bean.ActivityRegistration">
+        SELECT id, activity_id, user_id, registration_time, status
+        FROM activity_registrations
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </select>
+
+    <!-- 取消活动报名 -->
+    <update id="cancelRegistration">
+        UPDATE activity_registrations
+        SET status = 2
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </update>
+    
+    <!-- 查询用户已报名的活动 -->
+    <select id="selectActivitiesByUserId" parameterType="Long" resultMap="ActivityResultMap">
+        SELECT 
+            <include refid="ActivityBaseColumns"/>
+        FROM activities a
+        JOIN activity_registrations ar ON a.id = ar.activity_id
+        WHERE ar.user_id = #{userId} AND ar.status = 1
+        ORDER BY a.start_time DESC
+    </select>
+
+    <!-- 搜索活动 -->
+    <select id="searchActivities" parameterType="String" resultMap="ActivityResultMap">
+        SELECT 
+            <include refid="ActivityBaseColumns"/>
+        FROM activities a
+        WHERE a.title LIKE CONCAT('%', #{keyword}, '%')
+           OR a.location LIKE CONCAT('%', #{keyword}, '%')
+           OR a.description LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY a.created_at DESC
+    </select>
+
+    <!-- 活动结果映射 -->
+    <resultMap id="ActivityResultMap" type="org.example.springstudy.Bean.Activity">
+        <id property="id" column="id"/>
+        <result property="farmId" column="farm_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="location" column="location"/>
+        <result property="capacity" column="capacity"/>
+        <result property="registrations" column="registrations"/>
+        <result property="status" column="status"/>
+        <result property="image" column="image"/>
+        <result property="detail" column="detail"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <!-- 关联查询活动亮点 -->
+        <collection property="highlights" column="id" ofType="org.example.springstudy.Bean.ActivityHighlight" select="selectHighlightsByActivityId"/>
+        <!-- 关联查询活动标签 -->
+        <collection property="tags" column="id" ofType="org.example.springstudy.Bean.ActivityTag" select="selectTagsByActivityId"/>
+    </resultMap>
+</mapper>

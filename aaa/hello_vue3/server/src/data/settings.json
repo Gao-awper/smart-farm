@@ -1,0 +1,18 @@
+{
+  "farmInfo": {
+    "name": "智慧农场管理系统",
+    "address": "四川省达州市达川区四川文理学院园区",
+    "phone": "110",
+    "area": 100
+  },
+  "notificationSettings": {
+    "soil": true,
+    "weather": true,
+    "irrigation": true,
+    "crop": true,
+    "system": true,
+    "email": true,
+    "sms": false,
+    "app": true
+  }
+}

@@ -1,0 +1,308 @@
+.container {
+  padding: 20rpx;
+  padding-bottom: 120rpx;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.status-indicator {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #dc3545;
+  margin-right: 12rpx;
+}
+
+.status-indicator.connected {
+  background-color: #28a745;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2d5016;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f7e6;
+}
+
+.status-grid {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.status-box {
+  flex: 1;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  text-align: center;
+}
+
+.status-box:first-child {
+  margin-right: 20rpx;
+}
+
+.status-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.status-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.status-value.active {
+  color: #28a745;
+}
+
+.status-info {
+  padding-left: 20rpx;
+  border-left: 4rpx solid #2d5016;
+}
+
+.status-info text {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.control-buttons {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  text-align: center;
+}
+
+.control-btn:first-child {
+  margin-right: 20rpx;
+}
+
+.control-btn text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+}
+
+.control-btn.disabled {
+  opacity: 0.5;
+}
+
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.mode-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.mode-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2d5016;
+}
+
+.mode-switch {
+  width: 80rpx;
+  height: 44rpx;
+  background: #ccc;
+  border-radius: 22rpx;
+  padding: 4rpx;
+  transition: all 0.3s;
+}
+
+.mode-switch.active {
+  background: #2d5016;
+}
+
+.switch-dot {
+  width: 36rpx;
+  height: 36rpx;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.mode-switch.active .switch-dot {
+  transform: translateX(36rpx);
+}
+
+.schedule-list {
+  margin-bottom: 20rpx;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.schedule-time {
+  text-align: center;
+  margin-right: 20rpx;
+}
+
+.time-value {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2d5016;
+}
+
+.time-label {
+  display: block;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.schedule-info {
+  flex: 1;
+}
+
+.schedule-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+}
+
+.schedule-action {
+  padding: 12rpx 20rpx;
+  background: #2d5016;
+  border-radius: 8rpx;
+}
+
+.edit-text {
+  font-size: 24rpx;
+  color: white;
+}
+
+.add-schedule-btn {
+  text-align: center;
+  padding: 20rpx;
+  border: 2rpx dashed #ccc;
+  border-radius: 12rpx;
+}
+
+.add-schedule-btn text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.zones-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.zones-grid .zone-card {
+  width: calc(50% - 8rpx);
+  box-sizing: border-box;
+}
+
+.zones-grid .zone-card.zone-card-right {
+  margin-left: 16rpx;
+}
+
+.zone-card {
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.zone-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.zone-status {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  background: #6c757d;
+  color: white;
+}
+
+.zone-status.active {
+  background: #28a745;
+}
+
+.zone-status.warning {
+  background: #ffc107;
+}
+
+.zone-info text {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+}
+
+.zone-control {
+  margin-top: 12rpx;
+  padding: 12rpx;
+  background: #2d5016;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
+.zone-control text {
+  font-size: 24rpx;
+  color: white;
+}

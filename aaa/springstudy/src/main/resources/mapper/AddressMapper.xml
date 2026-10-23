@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.AddressMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, name, phone, province, city, district, detail_address, is_default
+    </sql>
+
+    <!-- 根据ID查询地址 -->
+    <select id="selectById" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.Address">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            addresses
+        WHERE
+            id = #{id}
+    </select>
+
+    <!-- 插入地址 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.Address" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO addresses (
+            name, phone, province, city, district, detail_address, is_default
+        ) VALUES (
+            #{name}, #{phone}, #{province}, #{city}, #{district}, #{detailAddress}, #{isDefault}
+        )
+    </insert>
+
+    <!-- 更新地址 -->
+    <update id="updateById" parameterType="org.example.springstudy.Bean.Address">
+        UPDATE addresses
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="district != null">district = #{district},</if>
+            <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 删除地址 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM addresses
+        WHERE
+            id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,89 @@
+<view class="container">
+  <view class="connection-status">
+    <view class="status-indicator {{ isConnected ? 'connected' : '' }}"></view>
+    <text>{{ isConnected ? '实时连接中' : '连接断开' }}</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">灌溉系统状态</view>
+    <view class="status-grid">
+      <view class="status-box">
+        <text class="status-label">当前状态</text>
+        <text class="status-value {{ irrigationStatus.status === '运行中' ? 'active' : '' }}">
+          {{ irrigationStatus.status }}
+        </text>
+      </view>
+      <view class="status-box">
+        <text class="status-label">今日用水</text>
+        <text class="status-value">{{ irrigationStatus.todayWaterUsage }}吨</text>
+      </view>
+    </view>
+    <view class="status-info">
+      <text>上次灌溉: {{ irrigationStatus.lastIrrigation }}</text>
+      <text>下次灌溉: {{ irrigationStatus.nextIrrigation }}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">灌溉控制</view>
+    <view class="control-buttons">
+      <view class="control-btn start-btn {{ irrigationStatus.status === '运行中' ? 'disabled' : '' }}" bindtap="startIrrigation">
+        <text>开始灌溉</text>
+      </view>
+      <view class="control-btn stop-btn {{ irrigationStatus.status === '待机' ? 'disabled' : '' }}" bindtap="stopIrrigation">
+        <text>停止灌溉</text>
+      </view>
+    </view>
+    <view class="mode-toggle" bindtap="toggleManualMode">
+      <text class="mode-label">模式:</text>
+      <text class="mode-value">{{ irrigationStatus.manualMode ? '手动模式' : '自动模式' }}</text>
+      <view class="mode-switch {{ irrigationStatus.manualMode ? 'active' : '' }}">
+        <view class="switch-dot"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">灌溉计划</view>
+    <view class="schedule-list">
+      <view class="schedule-item" wx:for="{{ irrigationSchedule }}" wx:key="time">
+        <view class="schedule-time">
+          <text class="time-value">{{ item.time }}</text>
+          <text class="time-label">灌溉时间</text>
+        </view>
+        <view class="schedule-info">
+          <text class="schedule-desc">时长: {{ item.duration }}分钟</text>
+          <text class="schedule-desc">区域: {{ item.area }}</text>
+        </view>
+        <view class="schedule-action">
+          <text class="edit-text" bindtap="editSchedule">编辑</text>
+        </view>
+      </view>
+    </view>
+    <view class="add-schedule-btn" bindtap="addSchedule">
+      <text>+ 添加灌溉计划</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">灌溉区域</view>
+    <view class="zones-grid">
+      <view class="zone-card {{ index % 2 === 1 ? 'zone-card-right' : '' }}" wx:for="{{ irrigationZones }}" wx:for-item="zone" wx:key="id">
+        <view class="zone-header">
+          <text class="zone-name">{{ zone.name }}</text>
+          <text class="zone-status {{ zone.status === '正常' ? 'active' : (zone.status === '警告' ? 'warning' : '') }}">
+            {{ zone.status }}
+          </text>
+        </view>
+        <view class="zone-info">
+          <text>面积: {{ zone.area }}亩</text>
+          <text>作物: {{ zone.crop }}</text>
+          <text>湿度: {{ zone.moisture }}%</text>
+        </view>
+        <view class="zone-control" bindtap="controlZone" data-id="{{ zone.id }}">
+          <text>{{ zone.controlStatus === '开启' ? '关闭灌溉' : '开启灌溉' }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

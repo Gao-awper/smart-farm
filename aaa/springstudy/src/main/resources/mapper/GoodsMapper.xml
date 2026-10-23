@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springstudy.Mapper.GoodsMapper">
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, name, tag, image, price, sales, category, stock
+    </sql>
+
+    <!-- 查询所有商品 -->
+    <select id="selectAll" resultType="org.example.springstudy.Bean.Goods">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods
+        ORDER BY
+            sales DESC
+    </select>
+
+    <!-- 根据分类查询商品 -->
+    <select id="selectByCategory" parameterType="java.lang.String" resultType="org.example.springstudy.Bean.Goods">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods
+        WHERE
+            category = #{category}
+        ORDER BY
+            sales DESC
+    </select>
+
+    <!-- 根据ID查询商品 -->
+    <select id="selectById" parameterType="java.lang.Long" resultType="org.example.springstudy.Bean.Goods">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods
+        WHERE
+            id = #{id}
+    </select>
+
+    <!-- 根据关键词搜索商品 -->
+    <select id="searchByKeyword" parameterType="java.lang.String" resultType="org.example.springstudy.Bean.Goods">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            goods
+        WHERE
+            name LIKE CONCAT('%', #{keyword}, '%')
+            OR tag LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY
+            sales DESC
+    </select>
+
+    <!-- 插入商品 -->
+    <insert id="insert" parameterType="org.example.springstudy.Bean.Goods" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO goods (
+            name, tag, image, price, sales, category, stock
+        ) VALUES (
+            #{name}, #{tag}, #{image}, #{price}, #{sales}, #{category}, #{stock}
+        )
+    </insert>
+
+    <!-- 更新商品 -->
+    <update id="updateById" parameterType="org.example.springstudy.Bean.Goods">
+        UPDATE goods
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="tag != null">tag = #{tag},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="sales != null">sales = #{sales},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="stock != null">stock = #{stock},</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 删除商品 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM goods
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!-- 扣减库存（带乐观锁） -->
+    <update id="decreaseStock">
+        UPDATE goods
+        SET stock = stock - #{count}
+        WHERE id = #{goodsId}
+          AND stock >= #{count}
+    </update>
+
+    <!-- 恢复库存 -->
+    <update id="increaseStock">
+        UPDATE goods
+        SET stock = stock + #{count}
+        WHERE id = #{goodsId}
+    </update>
+
+    <!-- 批量扣减库存 -->
+    <update id="decreaseStockBatch">
+        UPDATE goods
+        SET stock = stock - #{count}
+        WHERE id = #{goodsId}
+          AND stock >= #{count}
+    </update>
+
+    <!-- 批量恢复库存 -->
+    <update id="increaseStockBatch">
+        UPDATE goods
+        SET stock = stock + #{count}
+        WHERE id = #{goodsId}
+    </update>
+</mapper>
